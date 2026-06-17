@@ -72,17 +72,14 @@ class TiketRegular extends Tiket {
     
     /**
      * Implementasi abstract method hitungTotalHarga()
-     * Untuk TiketRegular, harga total = harga dasar + biaya tambahan untuk audio premium
+     * Untuk TiketRegular, menggunakan tarif standar murni tanpa biaya tambahan fasilitas
+     * Total Harga = jumlah_kursi * hargaDasarTiket
      * 
      * @return float - Total harga tiket Regular
      */
     public function hitungTotalHarga() {
-        $totalHarga = $this->hargaDasarTiket;
-        
-        // Tambahan biaya untuk audio premium (Dolby Digital)
-        if ($this->tipeAudio === 'Dolby Digital') {
-            $totalHarga += 5000; // Biaya tambahan untuk Dolby Digital
-        }
+        // Tarif standar murni: jumlah kursi dikali harga dasar
+        $totalHarga = $this->jumlah_kursi * $this->hargaDasarTiket;
         
         return $totalHarga;
     }
@@ -101,8 +98,12 @@ class TiketRegular extends Tiket {
         echo "Jumlah Kursi: " . $this->jumlah_kursi . "\n";
         echo "Lokasi Baris: " . $this->lokasiBaris . "\n";
         echo "Tipe Audio: " . $this->tipeAudio . "\n";
-        echo "Harga Dasar: Rp " . number_format($this->hargaDasarTiket, 0, ',', '.') . "\n";
-        echo "Total Harga: Rp " . number_format($this->hitungTotalHarga(), 0, ',', '.') . "\n";
+        echo "Harga Per Tiket: Rp " . number_format($this->hargaDasarTiket, 0, ',', '.') . "\n";
+        echo "\nRumus Perhitungan:\n";
+        echo "Total Harga = Jumlah Kursi × Harga Dasar\n";
+        echo "Total Harga = " . $this->jumlah_kursi . " × Rp " . number_format($this->hargaDasarTiket, 0, ',', '.') . "\n";
+        echo "\nTotal Harga: Rp " . number_format($this->hitungTotalHarga(), 0, ',', '.') . "\n";
+        echo "(Tarif Standar Murni - Tanpa Biaya Tambahan Fasilitas)\n";
         echo "=====================================\n";
     }
 }

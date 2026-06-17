@@ -72,22 +72,14 @@ class TiketIMAX extends Tiket {
     
     /**
      * Implementasi abstract method hitungTotalHarga()
-     * Untuk TiketIMAX, harga total = harga dasar + biaya kacamata 3D + biaya efek gerak
+     * Untuk TiketIMAX, dikenakan biaya tambahan teknologi proyeksi layar lebar IMAX dan audio flat
+     * Total Harga = (jumlah_kursi * hargaDasarTiket) + 35000
      * 
      * @return float - Total harga tiket IMAX
      */
     public function hitungTotalHarga() {
-        $totalHarga = $this->hargaDasarTiket;
-        
-        // Tambahan biaya untuk kacamata 3D (jika tersedia)
-        if (!is_null($this->kacamata3dId) && !empty($this->kacamata3dId)) {
-            $totalHarga += 15000; // Biaya tambahan untuk kacamata 3D
-        }
-        
-        // Tambahan biaya untuk efek gerak (jika tersedia)
-        if (!is_null($this->efekGerakFitur) && !empty($this->efekGerakFitur)) {
-            $totalHarga += 10000; // Biaya tambahan untuk efek gerak
-        }
+        // Harga dasar total ditambah biaya tambahan teknologi IMAX Rp 35.000
+        $totalHarga = ($this->jumlah_kursi * $this->hargaDasarTiket) + 35000;
         
         return $totalHarga;
     }
@@ -104,21 +96,21 @@ class TiketIMAX extends Tiket {
         echo "Film: " . $this->nama_film . "\n";
         echo "Jadwal Tayang: " . $this->jadwal_tayang . "\n";
         echo "Jumlah Kursi: " . $this->jumlah_kursi . "\n";
-        echo "Harga Dasar: Rp " . number_format($this->hargaDasarTiket, 0, ',', '.') . "\n";
+        echo "Harga Per Tiket: Rp " . number_format($this->hargaDasarTiket, 0, ',', '.') . "\n";
         
         if (!is_null($this->kacamata3dId) && !empty($this->kacamata3dId)) {
-            echo "Kacamata 3D: " . $this->kacamata3dId . " (+Rp 15.000)\n";
-        } else {
-            echo "Kacamata 3D: Tidak tersedia\n";
+            echo "Kacamata 3D: " . $this->kacamata3dId . "\n";
         }
         
         if (!is_null($this->efekGerakFitur) && !empty($this->efekGerakFitur)) {
-            echo "Efek Gerak: " . $this->efekGerakFitur . " (+Rp 10.000)\n";
-        } else {
-            echo "Efek Gerak: Tidak tersedia\n";
+            echo "Efek Gerak: " . $this->efekGerakFitur . "\n";
         }
         
-        echo "Total Harga: Rp " . number_format($this->hitungTotalHarga(), 0, ',', '.') . "\n";
+        echo "\nRumus Perhitungan:\n";
+        echo "Total Harga = (Jumlah Kursi × Harga Dasar) + Biaya Teknologi IMAX\n";
+        echo "Total Harga = (" . $this->jumlah_kursi . " × Rp " . number_format($this->hargaDasarTiket, 0, ',', '.') . ") + Rp 35.000\n";
+        echo "\nTotal Harga: Rp " . number_format($this->hitungTotalHarga(), 0, ',', '.') . "\n";
+        echo "(+Biaya Teknologi Proyeksi Layar Lebar IMAX & Audio Flat Rp 35.000)\n";
         echo "=================================\n";
     }
 }

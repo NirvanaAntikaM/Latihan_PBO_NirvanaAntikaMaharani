@@ -72,15 +72,16 @@ class TiketVelvet extends Tiket {
     
     /**
      * Implementasi abstract method hitungTotalHarga()
-     * Untuk TiketVelvet, harga sudah termasuk semua fasilitas premium
-     * Perhitungan = harga dasar (sudah mencakup bantal/selimut dan layanan butler)
+     * Untuk TiketVelvet, dikenakan surcharge/biaya tambahan kelas premium sebesar 50%
+     * Total Harga = (jumlah_kursi * hargaDasarTiket) * 1.50
      * 
      * @return float - Total harga tiket Velvet
      */
     public function hitungTotalHarga() {
-        // Untuk Velvet, harga dasar sudah mencakup semua fasilitas premium
-        // Tidak ada biaya tambahan
-        return $this->hargaDasarTiket;
+        // Harga premium dengan surcharge 50% untuk kelas Velvet luxury
+        $totalHarga = ($this->jumlah_kursi * $this->hargaDasarTiket) * 1.50;
+        
+        return $totalHarga;
     }
     
     
@@ -95,22 +96,22 @@ class TiketVelvet extends Tiket {
         echo "Film: " . $this->nama_film . "\n";
         echo "Jadwal Tayang: " . $this->jadwal_tayang . "\n";
         echo "Jumlah Kursi: " . $this->jumlah_kursi . " (Exclusive Sofa Lounge/Suite)\n";
-        echo "Harga Dasar: Rp " . number_format($this->hargaDasarTiket, 0, ',', '.') . "\n";
+        echo "Harga Per Tiket: Rp " . number_format($this->hargaDasarTiket, 0, ',', '.') . "\n";
         
         if (!is_null($this->bantalSelimutPack) && !empty($this->bantalSelimutPack)) {
             echo "Paket Bantal & Selimut: " . $this->bantalSelimutPack . "\n";
-        } else {
-            echo "Paket Bantal & Selimut: Tersedia\n";
         }
         
         if (!is_null($this->layananButler) && !empty($this->layananButler)) {
             echo "Layanan Butler: " . $this->layananButler . "\n";
-        } else {
-            echo "Layanan Butler: Tersedia\n";
         }
         
         echo "Fasilitas Tambahan: Sofa Lounge Eksklusif, Snack Premium, Layanan VIP\n";
-        echo "Total Harga: Rp " . number_format($this->hitungTotalHarga(), 0, ',', '.') . "\n";
+        echo "\nRumus Perhitungan:\n";
+        echo "Total Harga = (Jumlah Kursi × Harga Dasar) × 1.50\n";
+        echo "Total Harga = (" . $this->jumlah_kursi . " × Rp " . number_format($this->hargaDasarTiket, 0, ',', '.') . ") × 1.50\n";
+        echo "\nTotal Harga: Rp " . number_format($this->hitungTotalHarga(), 0, ',', '.') . "\n";
+        echo "(Surcharge Premium +50% untuk Kelas Velvet Luxury)\n";
         echo "====================================================\n";
     }
 }
